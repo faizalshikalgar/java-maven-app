@@ -1,21 +1,30 @@
 pipeline{
     agent any
-
-    tools {
-         maven 'maven'
-         jdk 'java'
+    tools{
+        Maven 'Maven'
     }
-
     stages{
-        stage('checkout'){
+        stage("Build jar"){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github access', url: 'https://github.com/sreenivas449/java-hello-world-with-maven.git']]])
-            }
+                echo "Building the application..."
+                sh 'mvn package'
+            }    
         }
-        stage('build'){
+        stage("build image"){
             steps{
-               bat 'mvn package'
-            }
+                echo "Building the docker image..."
+                withCredentials([usernamePassword(credentialsId: 'docker-hubrepo', passwordVariable: 'PASS' usernameVariable: 'USER')]) {
+                    sh 'docker build -t faizalshikalgar/demo-app:jma-2.0 .'
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push faizalshikalgar/demo-app:jma-2.0'
+                }        
+            }    
         }
+        stage("Deploy"){
+            steps{
+                echo "========executing A========"
+            }    
+        }
+        
     }
 }
