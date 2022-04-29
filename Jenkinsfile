@@ -15,7 +15,7 @@ pipeline{
         stage("Build jar"){
 	   when{
 		expression {
-			BRANCH_NAME == 'master' || BRANCH_NAMW == 'newfeature'
+			BRANCH_NAME == 'master'
 			    }
  		}
             steps{
@@ -28,7 +28,7 @@ pipeline{
         stage("build image"){
 	  when{
 		expression {
-			BRANCH_NAME == 'master' || BRANCH_NAMW == 'newfeature'
+			BRANCH_NAME == 'master'
 			    }
  		}
             steps{
