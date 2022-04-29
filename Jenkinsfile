@@ -14,7 +14,7 @@ pipeline{
         }
         stage("Build jar"){
             when{
-                expressiom{
+                expression{
                     BRANCH_NAME == "master'
                 }
             }
