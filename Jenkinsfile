@@ -28,7 +28,7 @@ pipeline{
         stage("build image"){
 	  when{
 		expression {
-			BRANCH_NAME == 'master' || BRANCH_NAME == 'newfeature'
+			BRANCH_NAME == 'master'
 			    }
  		}
             steps{
