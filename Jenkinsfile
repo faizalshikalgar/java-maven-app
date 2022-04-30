@@ -1,6 +1,3 @@
-#!/usr/bin/env groovy
-
-@Library ('shared-libs')
 def gv
 pipeline{
     agent any
@@ -18,14 +15,14 @@ pipeline{
         stage("Build jar"){
             steps{
                 script {
-                  buildJar()
+                  gv.buildJar()
                 }
             }    
         }
         stage("build image"){
             steps{
                 script {
-                    buildIamge()
+                    gv.buildIamge()
                 }        
             }    
         }
