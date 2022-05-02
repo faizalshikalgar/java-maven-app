@@ -19,14 +19,14 @@ pipeline{
         stage("Build jar"){
             steps{
                 script {
-                    buildJar '$BRANCH_NAME'
+                    buildJar()
                 }
             }    
         }
         stage("build image"){
             steps{
                 script {
-                     buildImage 'faizalshikalgar/demo-app:jma-2.1'
+                     buildImage 'faizalshikalgar/demo-app:jma-2.2'
                 }        
             }    
         }
