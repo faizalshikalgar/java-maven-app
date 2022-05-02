@@ -1,4 +1,8 @@
+#!/usr/bin/env groovy
+
+@Library('jenkins-shered-library')
 def gv
+
 pipeline{
     agent any
     tools{
@@ -15,14 +19,14 @@ pipeline{
         stage("Build jar"){
             steps{
                 script {
-                  gv.buildJar()
+                    buildJar()
                 }
             }    
         }
         stage("build image"){
             steps{
                 script {
-                    gv.buildIamge()
+                     buildImage()
                 }        
             }    
         }
