@@ -19,7 +19,7 @@ pipeline{
         stage("Build jar"){
             steps{
                 script {
-                    buildJar()
+                    buildJar '$BRANCH_NAME'
                 }
             }    
         }
