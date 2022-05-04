@@ -5,31 +5,30 @@ pipeline{
         maven 'Maven'
     }
     stages{
-        stage("init"){
-            steps {
-                script {
-                    gv = load "script.groovy"
-                }
-            }
-        }
-        stage("Build jar"){
+        stage("Build app"){
             steps{
                 script {
-                  gv.buildJar()
+                  echo "building the application"
+                  sh "mvn package"
                 }
             }    
         }
         stage("build image"){
             steps{
                 script {
-                    gv.buildIamge()
+                    echo "building the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'deocker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "docker build -t faizalshikalgar/demo-app:jma-2.0 ."
+                        sh "echo $PASS | docker login -u $USER -password-stdin"
+                        sh "docker push faizalshikalgar/demo-app:jma-2.0"
+                    }
                 }        
             }    
         }
         stage("Deploy"){
             steps{
                 script {
-                  gv.deployApp()
+                    echo "deploying the application..."
                 }
             }    
         }
