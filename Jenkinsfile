@@ -16,6 +16,7 @@ pipeline{
                   def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
                   def version = matcher[0][1]
                   env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+                  echo "$env.IMAGE_NAME"
                 }
             }    
         }
@@ -33,8 +34,8 @@ pipeline{
                     echo "building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'NAME')]) {
                         sh "echo $PASS | docker login -u $NAME -password-stdin"
-                        sh "docker build -t faizalshikalgar/demo-app:${IMAGE_NAME} ."
-                        sh "docker push faizalshikalgar/demo-app:${IMAGE_NAME}"
+                        sh "docker build -t faizalshikalgar/demo-app:${env.IMAGE_NAME} ."
+                        sh "docker push faizalshikalgar/demo-app:${env.IMAGE_NAME}"
                     }
                 }        
             }    
