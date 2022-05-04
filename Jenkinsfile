@@ -33,7 +33,7 @@ pipeline{
                 script {
                     echo "building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'NAME')]) {
-                        sh "echo $PASS | docker login -u $NAME -password-stdin"
+                        sh "echo $PASS | docker login -u $NAME --password-stdin"
                         sh "docker build -t faizalshikalgar/demo-app:${env.IMAGE_NAME} ."
                         sh "docker push faizalshikalgar/demo-app:${env.IMAGE_NAME}"
                     }
