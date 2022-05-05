@@ -32,8 +32,8 @@ pipeline{
             steps{
                 script {
                     echo "building the docker image..."
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'NAME')]) {
-                        sh "echo $PASS | docker login -u $NAME --password-stdin"
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
                         sh "docker build -t faizalshikalgar/demo-app:${env.IMAGE_NAME} ."
                         sh "docker push faizalshikalgar/demo-app:${env.IMAGE_NAME}"
                     }
@@ -50,7 +50,7 @@ pipeline{
         stage('commit version update') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'NAME')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         sh 'git config --global user.email "jenkins@example.com"'
                         sh 'git config --global user.name "jenkins"'
                         
