@@ -44,6 +44,9 @@ pipeline{
             steps{
                 script {
                     echo "deploying the application..."
+                    
+                    def shellCmd = "bash ./server-cmds.sh ${env.IMAGE_NAME}"
+                    def ec2Instance =  "ec2-user@******"
                 }
             }    
         }
